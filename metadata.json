@@ -1,0 +1,7 @@
+{
+  "name": "Vitality: AI Health & Nutrition",
+  "description": "Track your health goals with AI-powered food scanning, personalized calorie targets, and Google Fit integration.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
