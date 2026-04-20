@@ -257,19 +257,19 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowScannerOptions(!showScannerOptions)}
-            className="w-full p-8 rounded-[40px] bg-[#5A5A40] text-white flex items-center justify-between shadow-2xl hover:shadow-[#5A5A40]/20 transition-all group relative overflow-hidden"
+            className="w-full p-5 sm:p-8 rounded-[28px] sm:rounded-[40px] bg-[#5A5A40] text-white flex items-center justify-between shadow-2xl hover:shadow-[#5A5A40]/20 transition-all group relative overflow-hidden"
           >
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"
             />
-            <div className="flex items-center gap-6 relative z-10">
-              <div className="p-4 bg-white/10 rounded-[24px] backdrop-blur-md">
-                <Camera size={32} />
+            <div className="flex items-center gap-3 sm:gap-6 relative z-10">
+              <div className="p-3 sm:p-4 bg-white/10 rounded-[20px] sm:rounded-[24px] backdrop-blur-md">
+                <Camera size={26} />
               </div>
               <div className="text-left">
-                <div className="font-black text-2xl tracking-tighter">Scan Your Meal</div>
+                <div className="font-black text-lg sm:text-2xl tracking-tighter">Scan Your Meal</div>
                 <div className="text-[10px] uppercase tracking-[0.2em] font-black opacity-40 mt-1">AI-Powered Nutrition Analysis</div>
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                className="absolute top-full left-0 right-0 mt-6 z-20 bg-white rounded-[48px] shadow-2xl border border-[#5A5A40]/5 overflow-hidden p-3"
+                className="absolute top-full left-0 right-0 mt-4 sm:mt-6 z-20 bg-white rounded-[28px] sm:rounded-[48px] shadow-2xl border border-[#5A5A40]/5 overflow-hidden p-2 sm:p-3"
               >
                 <motion.button 
                   whileHover={{ scale: 1.02, backgroundColor: '#f5f5f0' }}
@@ -296,9 +296,9 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
                     setShowScannerOptions(false);
                     startCamera();
                   }}
-                  className="w-full p-6 flex items-center gap-5 rounded-[32px] transition-all"
+                  className="w-full p-4 sm:p-6 flex items-center gap-3 sm:gap-5 rounded-[24px] sm:rounded-[32px] transition-all"
                 >
-                  <div className="p-4 bg-[#5A5A40]/5 rounded-[20px] text-[#5A5A40]">
+                  <div className="p-3 sm:p-4 bg-[#5A5A40]/5 rounded-[16px] sm:rounded-[20px] text-[#5A5A40]">
                     <Camera size={24} />
                   </div>
                   <div className="text-left">
@@ -313,9 +313,9 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
                     setShowScannerOptions(false);
                     fileInputRef.current?.click();
                   }}
-                  className="w-full p-6 flex items-center gap-5 rounded-[32px] transition-all"
+                  className="w-full p-4 sm:p-6 flex items-center gap-3 sm:gap-5 rounded-[24px] sm:rounded-[32px] transition-all"
                 >
-                  <div className="p-4 bg-[#5A5A40]/5 rounded-[20px] text-[#5A5A40]">
+                  <div className="p-3 sm:p-4 bg-[#5A5A40]/5 rounded-[16px] sm:rounded-[20px] text-[#5A5A40]">
                     <Upload size={24} />
                   </div>
                   <div className="text-left">
@@ -342,7 +342,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex flex-col"
+            className="fixed inset-0 z-[120] bg-black flex flex-col"
           >
             <div className="relative flex-1">
               <video 
@@ -382,17 +382,17 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
               </AnimatePresence>
             </div>
             
-            <div className="p-8 bg-black flex justify-between items-center">
-              <button onClick={stopCamera} className="text-white p-4">
-                <X size={32} />
+            <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:p-8 bg-black flex justify-between items-center">
+              <button onClick={stopCamera} className="text-white p-3 sm:p-4">
+                <X size={28} />
               </button>
               <button 
                 onClick={captureImage}
-                className="w-20 h-20 rounded-full border-4 border-white p-1"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-white p-1"
               >
                 <div className="w-full h-full rounded-full bg-white" />
               </button>
-              <div className="w-16" />
+              <div className="w-12 sm:w-16" />
             </div>
           </motion.div>
         )}
@@ -401,7 +401,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center p-12 text-center"
+            className="fixed inset-0 z-[120] bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 sm:p-12 text-center"
           >
             <div className="relative mb-12">
               {capturedImage && (
@@ -450,7 +450,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-[56px] p-10 shadow-2xl border border-[#5A5A40]/5 font-sans relative overflow-hidden"
+            className="bg-white rounded-[32px] sm:rounded-[56px] p-5 sm:p-10 shadow-2xl border border-[#5A5A40]/5 font-sans relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#5A5A40]/5 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
             
@@ -488,7 +488,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
 
             <div className="mb-10 relative z-10">
               <label className="text-[10px] font-black uppercase tracking-[0.3em] text-[#5A5A40]/40 mb-4 block ml-4">Meal Occasion</label>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {mealTypes.map(type => (
                   <motion.button
                     key={type.value}
@@ -507,7 +507,7 @@ export default function FoodScanner({ onScan, dailyGoal }: FoodScannerProps) {
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-10 relative z-10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 relative z-10">
               <div className="text-center p-6 bg-[#f5f5f0] rounded-[32px] border border-[#5A5A40]/5 shadow-inner">
                 <input 
                   type="number" 

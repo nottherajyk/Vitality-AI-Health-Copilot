@@ -7,6 +7,24 @@ interface OnboardingProps {
   onComplete: (profile: UserProfile) => void;
 }
 
+const HEALTH_PROFILE_STEP = 5;
+
+const parseCommaSeparatedList = (value: string) =>
+  value
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+const withParsedHealthProfile = (
+  baseProfile: UserProfile,
+  healthConditionsInput: string,
+  deficienciesInput: string
+): UserProfile => ({
+  ...baseProfile,
+  healthConditions: parseCommaSeparatedList(healthConditionsInput),
+  deficiencies: parseCommaSeparatedList(deficienciesInput),
+});
+
 export default function Onboarding({ onComplete }: OnboardingProps) {
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<UserProfile>({
@@ -20,12 +38,19 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     timeframeWeeks: 12,
     activityLevel: 1.2,
   });
+  const [healthConditionsInput, setHealthConditionsInput] = useState('');
+  const [deficienciesInput, setDeficienciesInput] = useState('');
 
-  const nextStep = () => setStep(s => s + 1);
+  const nextStep = () => {
+    if (step === HEALTH_PROFILE_STEP) {
+      setProfile(prev => withParsedHealthProfile(prev, healthConditionsInput, deficienciesInput));
+    }
+    setStep(s => s + 1);
+  };
   const prevStep = () => setStep(s => s - 1);
 
   const handleComplete = () => {
-    onComplete(profile);
+    onComplete(withParsedHealthProfile(profile, healthConditionsInput, deficienciesInput));
   };
 
   return (
@@ -190,8 +215,8 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                   type="text" 
                   placeholder="e.g. Diabetes, Hypertension"
                   className="w-full p-6 bg-[#f5f5f0] rounded-[28px] outline-none font-black text-sm border border-[#5A5A40]/5 shadow-inner"
-                  value={profile.healthConditions?.join(", ") || ""}
-                  onChange={e => setProfile({...profile, healthConditions: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})}
+                  value={healthConditionsInput}
+                  onChange={e => setHealthConditionsInput(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
@@ -200,8 +225,8 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                   type="text" 
                   placeholder="e.g. Vitamin D, Iron"
                   className="w-full p-6 bg-[#f5f5f0] rounded-[28px] outline-none font-black text-sm border border-[#5A5A40]/5 shadow-inner"
-                  value={profile.deficiencies?.join(", ") || ""}
-                  onChange={e => setProfile({...profile, deficiencies: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})}
+                  value={deficienciesInput}
+                  onChange={e => setDeficienciesInput(e.target.value)}
                 />
               </div>
             </div>
