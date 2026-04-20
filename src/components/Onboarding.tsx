@@ -8,6 +8,7 @@ interface OnboardingProps {
 }
 
 export default function Onboarding({ onComplete }: OnboardingProps) {
+  const HEALTH_PROFILE_STEP = 5;
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<UserProfile>({
     weight: 70,
@@ -29,24 +30,22 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       .map(s => s.trim())
       .filter(Boolean);
 
+  const withParsedHealthProfile = (baseProfile: UserProfile): UserProfile => ({
+    ...baseProfile,
+    healthConditions: parseCommaSeparatedList(healthConditionsInput),
+    deficiencies: parseCommaSeparatedList(deficienciesInput),
+  });
+
   const nextStep = () => {
-    if (step === 5) {
-      setProfile(prev => ({
-        ...prev,
-        healthConditions: parseCommaSeparatedList(healthConditionsInput),
-        deficiencies: parseCommaSeparatedList(deficienciesInput),
-      }));
+    if (step === HEALTH_PROFILE_STEP) {
+      setProfile(prev => withParsedHealthProfile(prev));
     }
     setStep(s => s + 1);
   };
   const prevStep = () => setStep(s => s - 1);
 
   const handleComplete = () => {
-    onComplete({
-      ...profile,
-      healthConditions: parseCommaSeparatedList(healthConditionsInput),
-      deficiencies: parseCommaSeparatedList(deficienciesInput),
-    });
+    onComplete(withParsedHealthProfile(profile));
   };
 
   return (
