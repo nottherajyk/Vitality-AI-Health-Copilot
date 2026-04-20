@@ -7,8 +7,25 @@ interface OnboardingProps {
   onComplete: (profile: UserProfile) => void;
 }
 
+const HEALTH_PROFILE_STEP = 5;
+
+const parseCommaSeparatedList = (value: string) =>
+  value
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+const withParsedHealthProfile = (
+  baseProfile: UserProfile,
+  healthConditionsInput: string,
+  deficienciesInput: string
+): UserProfile => ({
+  ...baseProfile,
+  healthConditions: parseCommaSeparatedList(healthConditionsInput),
+  deficiencies: parseCommaSeparatedList(deficienciesInput),
+});
+
 export default function Onboarding({ onComplete }: OnboardingProps) {
-  const HEALTH_PROFILE_STEP = 5;
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<UserProfile>({
     weight: 70,
@@ -24,28 +41,16 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   const [healthConditionsInput, setHealthConditionsInput] = useState('');
   const [deficienciesInput, setDeficienciesInput] = useState('');
 
-  const parseCommaSeparatedList = (value: string) =>
-    value
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-  const withParsedHealthProfile = (baseProfile: UserProfile): UserProfile => ({
-    ...baseProfile,
-    healthConditions: parseCommaSeparatedList(healthConditionsInput),
-    deficiencies: parseCommaSeparatedList(deficienciesInput),
-  });
-
   const nextStep = () => {
     if (step === HEALTH_PROFILE_STEP) {
-      setProfile(prev => withParsedHealthProfile(prev));
+      setProfile(prev => withParsedHealthProfile(prev, healthConditionsInput, deficienciesInput));
     }
     setStep(s => s + 1);
   };
   const prevStep = () => setStep(s => s - 1);
 
   const handleComplete = () => {
-    onComplete(withParsedHealthProfile(profile));
+    onComplete(withParsedHealthProfile(profile, healthConditionsInput, deficienciesInput));
   };
 
   return (
